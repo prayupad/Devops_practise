@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: devopspractice 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devopspractice
+  template:
+    metadata:
+      labels:
+        app: devopspractice 
+    spec:
+      containers:
+        - name: devopspractice 
+          image: k8sdemoacr1598.azurecr.io/devopspractice
+          ports:
+          - containerPort: 3001
