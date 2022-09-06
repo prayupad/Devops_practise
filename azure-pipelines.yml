@@ -13,8 +13,7 @@ variables:
   dockerRegistryServiceConnection: '23cfcc7a-588f-44d1-815f-11d8c4e51f3d'
   imageRepository: 'devopspractice'
   containerRegistry: 'k8sdemoacr1598.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/backend/Dockerfile'
-  tag: '$(Build.BuildId)-latest'
+  tag: '$(Build.BuildId)'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -33,7 +32,17 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
+        dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          $(tag)
+          '$(tag)-backend'
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          '$(tag)-frontend'
+
