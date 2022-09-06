@@ -32,17 +32,17 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
+        dockerfile: $(Build.SourcesDirectory)/backend/Dockerfile
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          '$(tag)-backend'
+          $(tag)-backend
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
+        dockerfile: $(Build.SourcesDirectory)/frontend/Dockerfile
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          '$(tag)-frontend'
+          $(tag)-frontend
 
